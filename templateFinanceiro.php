@@ -9,11 +9,10 @@
 		border: 1px solid gray;
 	}
 	.header{
-		padding: 15px;
-		background-color: darkslategray;
+		background-color: gray;
 		color: white;
 	}
-	tbody td,thead th{
+	tr td,tr th{
 		padding: 5px;
 		border: 1px solid gray;
 	}
@@ -24,71 +23,41 @@
 
 <div class="box-content">
 	<div class="header">
-		<?php
-		$tipo = (isset($_GET['pagamentos']) && $_GET['pagamentos'] == 'concluidos') ? 'Concluidos' : 'Pendentes';
-		?>
-		<h2>Pagamentos <?php echo $tipo?></h2>
+		<?php $nome = (isset($_GET['pagamentos']) && $_GET['pagamentos'] == 'concluidos') ? 'Concluidos' : 'Pendentes';?>
+		<h2>Pagamentos <?php echo $nome?></h2>
 	</div><!--header-->
 
 	<div class="table-wraper">
 		<table style="width:900px;text-align: left;border-collapse: collapse;">
-			<thead class="titulo-tabela">
+			<tr class="titulo-tabela">
 				<th>Nome do Pagamento</th>
 				<th>Cliente</th>
 				<th>Valor</th>
 				<th>Vencimento</th>
-			</thead>
-
-			
+			</tr>
 			<?php
-			
-				if($tipo == 'Pendentes'){
-					$tipo = 0;
-				}else{
-					$tipo = 1;
-				}
-
-				$sql = Mysql::conectar()->prepare("SELECT * FROM `tb_admin.financeiro` WHERE status = $tipo");	
-
+				if($nome == 'Pendentes')
+					$nome = 0;
+				else
+					$nome = 1;
+				$sql = MySql::conectar()->prepare("SELECT * FROM `tb_admin.financeiro` WHERE status = $nome ORDER BY vencimento ASC");
 				$sql->execute();
 				$pendentes = $sql->fetchAll();
-				foreach($pendentes as $key => $value) {
-					$nomeCliente = Mysql::conectar()->prepare("SELECT `nome` FROM `tb_admin.clientes` WHERE id = $value[cliente_id]");
-					$nomeCliente->execute();
-					$nomeCliente = $nomeCliente->fetch()['nome'];
-					$style = "";
-				if(strtotime(date('Y-m-d')) >= strtotime($value['vencimento'])){
-					$style = 'style="background-color:#bf360c;color:white;font-weight:bold;"';
-				}
-			?>
 
-			<?php
-			/*
-				$query = "";
-				if(isset($_POST['acao'])){
-					$busca = $_POST['busca'];
-					$query = "WHERE nome LIKE '%$busca%' OR valor LIKE '%$busca%' ";
-				}
-				$clientes = Mysql::conectar()->prepare("SELECT * FROM `tb_admin.financeiro` $query");
-				$clientes->execute();
-				$clientes = $clientes->fetchAll();
-				if(isset($_POST['acao'])){
-					echo '<div class="cliente-result">Foram encontrados <b>'.count($clientes).'</b> resultado(s)</div>';
-				}
-				foreach($clientes as $value){
-					$nomeCliente = Mysql::conectar()->prepare("SELECT `nome` FROM `tb_admin.clientes` WHERE id = $value[cliente_id]");
-					$nomeCliente->execute();
-					$nomeCliente = $nomeCliente->fetch()['nome'];
-				}
-				*/
+				foreach ($pendentes as $key => $value) {
+				$clienteNome = MySql::conectar()->prepare("SELECT `nome` FROM `tb_admin.clientes` WHERE id = $value[cliente_id]");
+				$clienteNome->execute();
+				$clienteNome = $clienteNome->fetch()['nome'];
 			?>
-			<tbody <?php echo $style;?>>		
+			<tr>
 				<td><?php echo $value['nome']; ?></td>
-				<td><?php echo $nomeCliente; ?></td>
+				<td><?php echo $clienteNome; ?></td>
 				<td><?php echo $value['valor']; ?></td>
 				<td><?php echo date('d/m/Y',strtotime($value['vencimento'])); ?></td>
-			</tbody>
-			<?php }?>	
+			</tr>
+
+			<?php } ?>
+			
 			
 
 		</table>
