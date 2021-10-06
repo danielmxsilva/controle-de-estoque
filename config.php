@@ -5,6 +5,8 @@
 
 	date_default_timezone_set('America/Sao_Paulo');
 
+	require('vendor/autoload.php');
+
 	$autoload = function($class){
 		include('classes/'.$class.'.php');
 	};

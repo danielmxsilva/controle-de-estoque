@@ -112,3 +112,15 @@ no meu arquivo gerar-pdf.php->{
 	-pegar o nome do pdf dinamicamente pela url
 	-pegar o conteudo da tabela dinamicamente de acordo com a url
 }
+
+------------------------------------ AULA 7/8
+
+gerando pdf com php
+
+pra gerar um pdf eu não posso usar php, precisa ser html puro, então vou converter o php em html criando um buffer, vou dar um include dentro desse buffer, depois eu limpo esse buffer eu esvazio ele, mais antes de limpar eu guardo todo o conteúdo dentro de uma variavel, depois eu só chamo a variavel
+
+agora vou instalar as dependenciar via composer com o seguinte comando
+
+vou pesquisar no google packagist e pesquisar mpdf que é a classe que eu quero, vou pegar o código do composer
+
+vou no meu cmd navegar até a pasta do meu sistema, e colocar o comando do site
