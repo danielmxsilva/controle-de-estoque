@@ -58,7 +58,7 @@
 			</div><!--form-group-->
 
 			<div class="form-group form-produto">
-				<span class="block-span">Imagen:</span>
+				<span class="block-span">Imagens:</span>
 				<input type="hidden" name="imagem_default" value=" ">
 				<input multiple type="file" name="imagem_adicionar" id="input-img-adicionar">
 				<label style="width: 150px; left: 0;" for="input-img-adicionar" name="imagem_adicionar"><img src="<?php echo INCLUDE_PATH_PAINEL?>img/enviar-img.png"></label>

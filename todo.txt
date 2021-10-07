@@ -32,3 +32,10 @@ Agora vou na página cadastrar-produto->{
 	-peso - colocar um input range, com valores de 10 em 10
 	-imagem (Selecionar varias imagens ao mesmo tempo) atributo multiple
 }
+
+-----------------------------------AULA 2/8
+
+ir na página cadastrar-produtos->{
+	-colocar um input de quantidade atual
+}
+
