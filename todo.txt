@@ -1,146 +1,34 @@
-titulo de guia->Controle Financeiro, dois submenus->{
-	1-visualizar pagamentos, pro arquivo controle-financeiro->pegar o gerenciar-categorias ctrl+c,ctrl+v
-	2->fazer a tabela com nome do pagamento,cliente,valor,vencimento,#
+criar o modulo controle de estoque->{
+	-cadastrar produtos
 }
 
-criar nova tabela->tb_admin.financeiro->{
-	id->AI
-	cliente_id->INT
-	valor->varchar,255
-	vencimento->DATE
-}
+criar a página cadastrar produtos->
 
-ir na página de editar-cliente e adicionar um bloco de adicionar pagamentos->{
-	-form
-	-valor do pagamento
-	-numero de parcelas
-	-inserir pagamento
-}
-
-em baixo deste formulario->{
-	-adicionar a tabela de visualizar pagamentos
-	-h2 pagamentos
-	-pegar tabela nome do pagamento
-}
-
------------------------------------ AULA 2/8
-
-Adicionar uma nova coluna na tabela depois de cliente id->{
-	-nome-255
-	-status-int
-}
-
-vou criar um arquivo de js só para o financeiro->{
-	-então vou pegar meu loadJs e carregar dinamicamente o /controleFinanceiro.js/
-}
-
-Trabalhando no controleFinanceiro.js->{
-	-Colocar mascara no numero de parcelas até 99
-	-Download do plugin maskMoney, colocar no formato de Real
-	-Colocar o plugin de calendario no vencimento "https://github.com/stefangabos/Zebra_Datepicker"
-}
-
-ir na página de editar clientes->{
-	-vão ser 2 tabelas 1->pagamentos pendentes 2->pagamentos concluidos
-}
-
-ir na página de visualizar pagamentos->{
-	-vão ser 2 tabelas 1->pagamentos pendentes 2->pagamentos concluidos
-}
-
------------------------------------ AULA 3/8
-
-No arquivo editar-cliente adicionar o campo intervalo
-
-Adicionar um php no formulario de adicionar pagamentos->{
-	client_id vou pegar o id da página
-	nome
-	valor
-	vencimentoOriginal
-	intervalo
-	numero_parcelas
-	status padrão é 0
-}
-
-vou rodar um loping for em numero_parcelas
-
-A logica dentro do loping vai ser a seguinte
-
-$vencimento = strtotime($vencimentoOriginal) + (($i * $numero_parcelas) * (60*60*24));
-
-inserir no banco de dados os valores de resultados
-
-
------------------------------------ AULA 4/8
-
-fazer sistema de validação de data, não permitir colocar uma data de vencimento menor que a data de hoje
-
-Puxar do banco de dados os valores do financeiro com pagamentos pendentes 
-
-puxar somente parcelas deste cliente, ordenar por data crescente
-
-
------------------------------------ AULA 5/8
-
-trabalhar na página editar cliente->{
-	2 botão-> no th{
-		-enviar e-mail
-		-marcar como pago
+ir no banco de dados e criar uma tabela pro controle de estoque->{
+	-tb_admin.estoque_produtos->{
+		-id
+		-nome
+		-descricao
+		-largura
+		-altura
+		-comprimento
+		-peso
+		-imagem
 	}
-	2 botão-> no td{
-		-pegar o botão de editar e deletar e colar aqui
-		-stilizar os botões
-	}
-	fazer validação pra ver se está vencido{
-		colocar uma cor vermelha
+	-tb_admin.estoque_imagens->{
+		-id
+		-produto_id
+		-imagem
 	}
 }
 
------------------------------------ AULA 6/8
-
-colocar as tabelas na página controle financeiro
-
-habilitar botão quitar divida
-
-Gerar pdf vou no link do gerar pdf e no href preciso mandar para o arquivo gerar-pdf.php, no segundo parametro qual pagamento quero gerar o pdf
-
-abrir nova guia no navegador
-
-no meu arquivo gerar-pdf.php->{
-	-carregar o config, pra pegar as classes de mysql
-	-abrir apenas os clientes pesquisados
-	-pegar o nome do pdf dinamicamente pela url
-	-pegar o conteudo da tabela dinamicamente de acordo com a url
+Agora vou na página cadastrar-produto->{
+	formulário normal
+	-nome do produto
+	-descrição do produto
+	-largura - colocar um input range, com valores de 10 em 10
+	-altura - colocar um input range, com valores de 10 em 10
+	-comprimento - colocar um input range, com valores de 10 em 10
+	-peso - colocar um input range, com valores de 10 em 10
+	-imagem (Selecionar varias imagens ao mesmo tempo) atributo multiple
 }
-
------------------------------------- AULA 7/8
-
-gerando pdf com php
-
-pra gerar um pdf eu não posso usar php, precisa ser html puro, então vou converter o php em html criando um buffer, vou dar um include dentro desse buffer, depois eu limpo esse buffer eu esvazio ele, mais antes de limpar eu guardo todo o conteúdo dentro de uma variavel, depois eu só chamo a variavel
-
-agora vou instalar as dependenciar via composer com o seguinte comando
-
-vou pesquisar no google packagist e pesquisar mpdf que é a classe que eu quero, vou pegar o código do composer
-
-vou no meu cmd navegar até a pasta do meu sisvtema, e colocar o comando do site
-
-
------------------------------------- AULA 8/8
-
-Ao deletar um cliente, vou deletar tudo que faz referencia a ele no financeiro->{
-	então na parte de deletar a foto do cliente eu faço a exclusão do financeiro dele
-}
-
-Eu vou fazer uma validação pra empedir do usuario mandar varios e-mails de uma vez para o cliente->{
-	vou pegar o id da parcela pela url parcela
-	vou pegar o id do cliente pela url email
-	vou verificar se ja existe o cookie->{
-		-sim, erro já foi enviado um email
-		-não, criar o cookie
-	}
-}
-
-Agora vou pegar quanto o cliente ta devendo no banco de dados
-
-e vou pegar o cliente no banco também
