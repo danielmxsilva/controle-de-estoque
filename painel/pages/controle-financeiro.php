@@ -51,6 +51,7 @@
 		}
 
 
+
 		if(isset($_GET['email'])){
 			$parcela_id = (int)$_GET['parcela'];
 			$cliente_id = (int)$_GET['email'];
