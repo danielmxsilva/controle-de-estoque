@@ -49,6 +49,41 @@
 				Painel::alert("erro","Ocorreu algum erro!");
 			}
 		}
+
+		if(isset($_GET['email'])){
+			$parcela_id = (int)$_GET['parcela'];
+			$cliente_id = (int)$_GET['email'];
+
+			$sql = Mysql::conectar()->prepare("SELECT * FROM `tb_admin.financeiro` WHERE id = $parcela_id");
+			$sql->execute();
+			$infoFinanceiro = $sql->fetch();
+
+			$sql = Mysql::conectar()->prepare("SELECT * FROM `tb_admin.clientes` WHERE id = $cliente_id");
+			$sql->execute();
+			$infoCliente = $sql->fetch();
+
+			$novaData = date('d/m/Y',strtotime($infoFinanceiro['vencimento']));
+
+			$corpoEmail = "Olá $infoCliente[nome], você está com um saldo pendente de $infoFinanceiro[valor] com o vencimento para $novaData. Entre em contato conosco para quitar sua parcela!";
+
+			$email = new Email('vps.dankicode.com','teste@dankicode.com','123456','Guilherme');
+			$email->addAddress($infoCliente['email'],$infoCliente['nome']);
+
+			$email->formatarEmail(array('assunto'=>'Cobrança','corpo'=>$corpoEmail));
+			$email->sendEmail();
+
+			/*
+				Código de exemplo, não tenho uma classe Email para instanciar.
+			*/
+
+			if(isset($_COOKIE['cliente_'.$cliente_id])){
+				Painel::alert("erro",'Já foi enviado um e-mail cobrando este cliente por favor aguarde mais um pouco');
+			}else{
+				Painel::alert("sucesso",'email enviado!');
+				setcookie('cliente_'.$cliente_id,true,time()+30,'/');
+			}
+		}
+
 	?>
 
 	<div class="table-wraper">
@@ -77,45 +112,28 @@
 				$sql->execute();
 				$pendentes = $sql->fetchAll();
 				foreach($pendentes as $key => $value) {
-					$nomeCliente = Mysql::conectar()->prepare("SELECT `nome` FROM `tb_admin.clientes` WHERE id = $value[cliente_id]");
+					$nomeCliente = Mysql::conectar()->prepare("SELECT `nome`,`id` FROM `tb_admin.clientes` WHERE id = $value[cliente_id]");
 					$nomeCliente->execute();
-					$nomeCliente = $nomeCliente->fetch()['nome'];
+					$info = $nomeCliente->fetch();
+					$nomeCliente = $info['nome'];
+					$idCliente = $info['id'];
 					$style = "";
+					$singleStyle = 'style="background-color:#e1dddd;"';
 				if(strtotime(date('Y-m-d')) >= strtotime($value['vencimento'])){
 					$style = 'style="background-color:#bf360c;color:white;font-weight:bold;"';
+					$singleStyle = "";
 				}
-			?>
-
-			<?php
-			/*
-				$query = "";
-				if(isset($_POST['acao'])){
-					$busca = $_POST['busca'];
-					$query = "WHERE nome LIKE '%$busca%' OR valor LIKE '%$busca%' ";
-				}
-				$clientes = Mysql::conectar()->prepare("SELECT * FROM `tb_admin.financeiro` $query");
-				$clientes->execute();
-				$clientes = $clientes->fetchAll();
-				if(isset($_POST['acao'])){
-					echo '<div class="cliente-result">Foram encontrados <b>'.count($clientes).'</b> resultado(s)</div>';
-				}
-				foreach($clientes as $value){
-					$nomeCliente = Mysql::conectar()->prepare("SELECT `nome` FROM `tb_admin.clientes` WHERE id = $value[cliente_id]");
-					$nomeCliente->execute();
-					$nomeCliente = $nomeCliente->fetch()['nome'];
-				}
-				*/
 			?>
 			<tbody <?php echo $style;?>>		
 				<td><?php echo $value['nome']; ?></td>
 				<td><?php echo $nomeCliente; ?></td>
 				<td><?php echo $value['valor']; ?></td>
 				<td><?php echo date('d/m/Y',strtotime($value['vencimento'])); ?></td>
-				<td class="tb-editar">
+				<td class="tb-editar" <?php echo $singleStyle;?>>
 					<a <?php
 							if($_SESSION['cargo'] >= 1){
 						  ?>
-						   href=""
+						   href="<?php echo INCLUDE_PATH_PAINEL?>controle-financeiro?email=<?php echo $idCliente?>&parcela=<?php echo $value['id']?>"
 						  <?php }else{ ?> 
 						  	actionBtn="negado" href="#"
 						  <?php } ?>

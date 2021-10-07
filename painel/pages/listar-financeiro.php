@@ -17,6 +17,18 @@
 		}
 	?>
 
+	<div class="busca">
+		<h2>Realizar uma busca</h2>
+		<form method="post">
+			<input type="text" name="busca" placeholder="nome do pagamento ou valor">
+			<input type="submit" name="acao_buscar" value="Buscar">
+		</form>
+	</div><!--busca-->
+
+	<div class="gerar-pdf">
+		<a target="_blank" href="<?php echo INCLUDE_PATH?>gerar-pdf.php?pagamentos=concluidos">Gerar PDF</a>
+	</div><!--gerar-pdf-->
+
 	<div class="table-wraper">
 		<table>
 			<thead class="titulo-tabela">
@@ -38,6 +50,12 @@
 			if($_GET['url'] == 'controle-financeiro'){
 				$sql = Mysql::conectar()->prepare("SELECT * FROM `tb_admin.financeiro` WHERE status = 0 ORDER BY vencimento ASC");
 			}
+
+			/*
+			if(isset($_POST['acao_buscar'])){
+				$busca = $_POST['busca'];
+				$sql = Mysql::conectar()->prepare("SELECT * FROM `tb_admin.financeiro` WHERE status = 0 AND nome LIKE '%$busca%' OR valor LIKE '%$busca%'");
+			}*/
 				$sql->execute();
 				$pendentes = $sql->fetchAll();
 				foreach($pendentes as $key => $value) {

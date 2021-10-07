@@ -123,4 +123,24 @@ agora vou instalar as dependenciar via composer com o seguinte comando
 
 vou pesquisar no google packagist e pesquisar mpdf que é a classe que eu quero, vou pegar o código do composer
 
-vou no meu cmd navegar até a pasta do meu sistema, e colocar o comando do site
+vou no meu cmd navegar até a pasta do meu sisvtema, e colocar o comando do site
+
+
+------------------------------------ AULA 8/8
+
+Ao deletar um cliente, vou deletar tudo que faz referencia a ele no financeiro->{
+	então na parte de deletar a foto do cliente eu faço a exclusão do financeiro dele
+}
+
+Eu vou fazer uma validação pra empedir do usuario mandar varios e-mails de uma vez para o cliente->{
+	vou pegar o id da parcela pela url parcela
+	vou pegar o id do cliente pela url email
+	vou verificar se ja existe o cookie->{
+		-sim, erro já foi enviado um email
+		-não, criar o cookie
+	}
+}
+
+Agora vou pegar quanto o cliente ta devendo no banco de dados
+
+e vou pegar o cliente no banco também

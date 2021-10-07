@@ -111,6 +111,7 @@
 		$foto = $sql->fetch()['foto'];
 		@unlink('../uploads/'.$foto);
 		Mysql::conectar()->exec("DELETE FROM `tb_admin.clientes` WHERE id = $id");
+		Mysql::conectar()->exec("DELETE FROM `tb_admin.financeiro` WHERE cliente_id = $id");
 	}
 
 	die(json_encode($data));
