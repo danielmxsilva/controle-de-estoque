@@ -123,6 +123,7 @@
 		<div class="gestao-aside">
 			<h2 class="gestao-adm">Controle de Estoque</h2>
 			<a href="<?php echo INCLUDE_PATH_PAINEL?>cadastrar-produto">Cadastrar Produto</a>
+			<a href="<?php echo INCLUDE_PATH_PAINEL?>visualizar-produtos">Visualizar Produtos</a>
 		</div>
 	</aside>
 

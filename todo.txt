@@ -56,3 +56,13 @@ ir na página cadastrar-produtos->{
 
 
 -----------------------------------AULA 3/9
+
+vou no meu main.php e colocar mais um item no menu na aba controle de estoque, visualizar produtos, vou pegar os codigos de gerenciar clientes e dar um ctrl c, ctrl v
+
+na página visualizar produtos->{
+	titulo->Produtos Cadastrados
+	Realizar Busca->Procure pelo nome do produto
+	Por enquanto retirar o foreach e estilizar de acordo com meu gosto
+	Adicionar ao produto a opção de colocar quantidade
+	Ver onde a foto fica melhor pro meu gosto
+}

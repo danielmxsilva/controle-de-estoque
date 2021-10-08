@@ -922,7 +922,7 @@ a.pag-selected{
 /***FINAL ADM-PAINEL***/
 
 
-.busca input[type=submit]{
+.busca input[type=submit],input[name=quantidade_atual]{
 	height: 30px;
 	padding-left: 0;
 	width: 80px;
@@ -971,6 +971,13 @@ a.pag-selected{
 
 .gerar-pdf a:active{
 	background-color: #e7410f;
+}
+
+.form-quantity{
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	padding: 20px 0;
+	text-align: center;
 }
 
 @media screen and (max-width: 800px){
