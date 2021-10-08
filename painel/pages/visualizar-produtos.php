@@ -69,12 +69,18 @@
 			$query = "";
 			if(isset($_POST['acao']) && $_POST['acao'] == 'Buscar'){
 				$busca = $_POST['busca'];
-				$query = "WHERE nome LIKE '%$busca%' OR descricao LIKE '%$busca%'";
+				$query = "WHERE (nome LIKE '%$busca%' OR descricao LIKE '%$busca%')";
 			}
+			
 			if(isset($_POST['acao']) && $_POST['acao'] == 'Ver todos'){
 				$query = "";
 			}
-			$sql = Mysql::conectar()->prepare("SELECT * FROM `tb_admin.estoque_produtos` $query");
+			if($query == ""){
+				$query2 = "WHERE quantidade > 0";
+			}else{
+				$query2 = " AND quantidade > 0";
+			}
+			$sql = Mysql::conectar()->prepare("SELECT * FROM `tb_admin.estoque_produtos` $query $query2");
 			$sql->execute();
 			$produto = $sql->fetchAll();
 			if($query != ''){
@@ -82,9 +88,6 @@
 			}
 
 			foreach($produto as $key => $value){
-				if($value['quantidade'] == 0){
-					continue;
-				}
 				$imagemSingle = Mysql::conectar()->prepare("SELECT * FROM `tb_admin.estoque_imagens` WHERE produto_id = ? LIMIT 1");
 				$imagemSingle->execute(array($value['id']));
 				$imagemSingle = $imagemSingle->fetch()['imagem'];
@@ -192,6 +195,12 @@
 			$sql = Mysql::conectar()->prepare("SELECT * FROM `tb_admin.estoque_produtos` WHERE quantidade = 0");
 			$sql->execute();
 			$produto = $sql->fetchAll();
+
+			if(count($produto) > 0){
+				Painel::alert("atencao","Todos os produtos listados abaixo estão em falta!");
+			}else{
+				Painel::alert("sucesso","Não existe produto em falta!");
+			}
 
 			//echo '<div class="cliente-result">Foram encontrados <b>'.count($produto).'</b> resultado(s)</div><br><form method="post"><div class="busca"><input type="submit" name="acao" value="Ver todos"></form></div>';
 
