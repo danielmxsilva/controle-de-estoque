@@ -147,3 +147,9 @@ agora vou fazer via php a exclusão do conteúdo e das fotos->{
 
 	-dar o alerta
 }
+
+-----------------------------------AULA 8/9
+
+Criar um novo arquivo editar-produto.php->{
+	-editar ao meu gosto 
+}
