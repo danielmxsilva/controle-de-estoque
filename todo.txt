@@ -35,6 +35,7 @@ Agora vou na página cadastrar-produto->{
 
 -----------------------------------AULA 2/9
 
+
 ir na página cadastrar-produtos->{
 	-colocar um input de quantidade atual
 	-recuperar os valores dos inputs
@@ -43,7 +44,15 @@ ir na página cadastrar-produtos->{
 	-vou passar a variavel sucesso igual a true
 	-rodar um looping for no amountFiles
 	-criar uma variavel imagemAtual recuperar o type e o size
+
 	-chamar o metodo de validação de imagem conferir se é igual a falso - variavel sucesso é igual a false, metodo alert, e um break
 	-verificar se foi selecionada uma imagen no formulario, se não for erro, e sucesso igual a false
+
+	-na ultima verificação se sucesso é igual a true eu rodo um looping no amountFiles, vou pegar a variavel imagemAtual trocar o type por tmp_name e o size por name.
+	-vou chamar o metodo uploadFile em um array e colocar a variavel imagemAtual
+
+	-vou inserir todos os posts na tabela estoque
 }
 
+
+-----------------------------------AULA 3/9
