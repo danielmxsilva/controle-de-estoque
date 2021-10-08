@@ -66,3 +66,16 @@ na página visualizar produtos->{
 	Adicionar ao produto a opção de colocar quantidade
 	Ver onde a foto fica melhor pro meu gosto
 }
+
+-----------------------------------AULA 4/9
+
+puxar do banco os valores do produto rodar um looping com o valor dos produtos
+
+puxar tmb uma foto do mesmo produto na tabela de imagens
+
+fazer o sistema de update de quantidade->{
+	-pegar o id do produto com um input hidden
+	-pegar o nome do produto pra colocar no alert
+	-verificar se não está colocando um numero negativo em quantidade
+	-adicionar ao banco de dados
+}

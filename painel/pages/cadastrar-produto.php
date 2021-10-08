@@ -67,7 +67,7 @@
 				$sql = Mysql::conectar()->exec("INSERT INTO `tb_admin.estoque_imagens` VALUES(null,$lastId,'$value')");
 			}
 
-			Painel::alert('sucesso','Tudo certo só adicionar!');
+			Painel::alert('sucesso','Produto adicionado com sucesso!');
 		}
 	}
 
@@ -82,7 +82,7 @@
 
 			<div class="form-group form-produto">
 				<span class="block-span">Descrição:</span>
-				<input style="width:100%;" type="text" name="descricao" value="" >
+				<textarea style="width:100%;" type="text" name="descricao"></textarea>
 			</div><!--from-group-->
 
 			<div class="form-group form-produto">
