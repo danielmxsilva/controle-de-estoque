@@ -1,0 +1,49 @@
+criar o modulo controle de estoque->{
+	-cadastrar produtos
+}
+
+criar a página cadastrar produtos->
+
+ir no banco de dados e criar uma tabela pro controle de estoque->{
+	-tb_admin.estoque_produtos->{
+		-id
+		-nome
+		-descricao
+		-largura
+		-altura
+		-comprimento
+		-peso
+		-imagem
+	}
+	-tb_admin.estoque_imagens->{
+		-id
+		-produto_id
+		-imagem
+	}
+}
+
+Agora vou na página cadastrar-produto->{
+	formulário normal
+	-nome do produto
+	-descrição do produto
+	-largura - colocar um input range, com valores de 10 em 10
+	-altura - colocar um input range, com valores de 10 em 10
+	-comprimento - colocar um input range, com valores de 10 em 10
+	-peso - colocar um input range, com valores de 10 em 10
+	-imagem (Selecionar varias imagens ao mesmo tempo) atributo multiple
+}
+
+-----------------------------------AULA 2/9
+
+ir na página cadastrar-produtos->{
+	-colocar um input de quantidade atual
+	-recuperar os valores dos inputs
+	-criar uma variavel imagens e passar como um array
+	-pegar as imagens do input file com o count jogar na variavel amountFiles e pegar o nome
+	-vou passar a variavel sucesso igual a true
+	-rodar um looping for no amountFiles
+	-criar uma variavel imagemAtual recuperar o type e o size
+	-chamar o metodo de validação de imagem conferir se é igual a falso - variavel sucesso é igual a false, metodo alert, e um break
+	-verificar se foi selecionada uma imagen no formulario, se não for erro, e sucesso igual a false
+}
+
