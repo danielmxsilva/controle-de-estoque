@@ -79,3 +79,42 @@ fazer o sistema de update de quantidade->{
 	-verificar se não está colocando um numero negativo em quantidade
 	-adicionar ao banco de dados
 }
+
+-----------------------------------AULA 5/9
+
+Fazer o sistema de busca->{
+	-Colocar uma variavel query no sql
+	-colocar a query vazia em cima de tudo
+	-verificar se existe o post buscar
+	-adicionar a query o LIKE
+	-se existe uma busca mostra resultados
+	-fazer o botão ver todos
+}
+
+-----------
+
+Alterar o nome do produtos cadastrados para produtos no estoque
+
+Sistema de alerta para falta de produtos->{
+	-verificar se existe o get falta se não existe, eu visualizo a página de produtos
+	-se existe o get falta trabalho aqui agora
+	-vou na classe do alerta e adiciono outro else if do tipo atenção colocar cor laranja
+}
+
+Criando a parte de produtos em falta->{
+	-busca não preciso mais
+	-retirar os produtos em falta da página vizualizar produtos
+}
+
+Colocando a mensagem de produto em falta->{
+	-selecionar tudo da tabela quando quantidade for igual a 0
+	-fazer uma validação verificando se o sql bate com a condição passada no WHERE
+}
+
+Criando a página de visualizar produtos em falta->{
+	-colocar na query se quantidade for igual a 0
+}
+
+-------------------
+
+Tirar da página visualizar produtos os produtos sem estoque (quantidade = 0);

@@ -117,12 +117,22 @@ html,body{
 	text-align: center;
 }
 
-.sucesso-box{
+.sucesso-box,.atencao-box{
 	width: 100%;
 	padding: 10px 0;
 	background-color: #00796b;
 	color: white;
 	text-align: center;
+}
+
+.atencao-box{
+	background-color: #fb6e1c;
+}
+
+.atencao-box a{
+	color: white;
+	font-weight: bold;
+	text-decoration: none;
 }
 
 /**PAINEL MAIN**/

@@ -82,6 +82,8 @@
 				echo '<div class="sucesso-box">'.$mensagem.'</div>';
 			}else if($tipo == 'erro'){
 				echo '<div class="erro-box">'.$mensagem.'</div>';
+			}else if($tipo == 'atencao'){
+				echo '<div class="atencao-box">'.$mensagem.'</div>';
 			}
 		}
 
