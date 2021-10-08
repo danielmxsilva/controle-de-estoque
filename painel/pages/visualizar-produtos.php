@@ -37,6 +37,20 @@
 	</div><!--busca-->
 	<br>
 	<?php
+
+		if(isset($_GET['deletar'])){
+			$id = (int)$_GET['deletar'];
+			$imagens = Mysql::conectar()->prepare("SELECT * FROM `tb_admin.estoque_imagens` WHERE produto_id = $id");
+			$imagens->execute();
+			$imagens = $imagens->fetchAll();
+			foreach($imagens as $key => $value) {
+				@unlink(BASE_DIR_PAINEL.'/uploads/'.$value['imagem']);
+			}
+			$sql = Mysql::conectar()->exec("DELETE FROM `tb_admin.estoque_imagens` WHERE produto_id = $id");
+			$sql = Mysql::conectar()->exec("DELETE FROM `tb_admin.estoque_produtos` WHERE id = $id");
+			Painel::alert("sucesso","Produto deletado com sucesso!");
+		}
+
 		if(isset($_POST['quantidade_atual'])){
 			$produto_id = $_POST['id_produto'];
 			$nome_produto = $_POST['nome_produto'];
@@ -124,7 +138,7 @@
 					<a <?php
 							if($_SESSION['cargo'] >= 1){
 						  ?>
-						   class="btn-delete" item_id="<?php echo $value['id']?>" href=""
+						   class="" href="<?php echo INCLUDE_PATH_PAINEL?>visualizar-produtos?deletar=<?php echo $value['id']?>"
 						  <?php }else{ ?> 
 						  	actionBtn="negado" href="#"
 						  <?php } ?>
@@ -242,7 +256,7 @@
 					<a <?php
 							if($_SESSION['cargo'] >= 1){
 						  ?>
-						   class="btn-delete" item_id="<?php echo $value['id']?>" href=""
+						   class="btn-delete" item_id="<?php echo $value['id']?>" href="<?php echo INCLUDE_PATH_PAINEL?>visualizar-produtos?deletar=<?php echo $value['id']?>"
 						  <?php }else{ ?> 
 						  	actionBtn="negado" href="#"
 						  <?php } ?>

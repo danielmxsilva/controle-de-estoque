@@ -20,7 +20,7 @@ $(function(){
 		}
 	})
 
-	$('.btn-delete').click(function(e){
+	$('.delete-cliente').click(function(e){
 		e.preventDefault();
 		var item_id = $(this).attr('item_id');
 		var el = $(this).parent().parent().parent();

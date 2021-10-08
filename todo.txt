@@ -124,7 +124,26 @@ Tirar da página visualizar produtos os produtos sem estoque (quantidade = 0);
 vou ir na página visualizar produtos e na minha query montada vou adicionar query2->{
 	-verificar se a query é vazia
 	-fazer a query 2 quando quantidade for maior do que 0
-	-no else e quantidade maior do que 0
+	-no else e quantidade maior do que 
 	-(Se der conflito e ainda aparecer produtos que não deveriam aparecer é pq minha verificação com LIKE OR precisa estar entre conchetes, para formar uma expressão)
 	-Ir na página de produtos em falta, e adicionar uma verificação com count em produtos for maior que 0
+}
+
+-----------------------------------AULA 7/9
+
+vou ir no botão de deletar, e passar o parametro no href->{
+	-visualizar-pagamento?deletar=> vou pegar o id do item atual
+}
+
+agora vou fazer via php a exclusão do conteúdo e das fotos->{
+	-se existe o get deletar entra na condição 
+	-vou pegar o valor inteiro do id
+	-vou pegar as imagens do banco de dados
+	-rodar um looping em imagens
+	-deletar as imagems com unlink
+
+	-deletar da tabela tb_admin.estoque_produto
+	-deletar da tabela tb_admin.estoque_imagens
+
+	-dar o alerta
 }

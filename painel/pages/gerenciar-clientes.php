@@ -82,7 +82,7 @@
 					<a <?php
 							if($_SESSION['cargo'] >= 1){
 						  ?>
-						   class="btn-delete" item_id="<?php echo $value['id']?>" href=""
+						   class="btn-delete delete-cliente" item_id="<?php echo $value['id']?>" href=""
 						  <?php }else{ ?> 
 						  	actionBtn="negado" href="#"
 						  <?php } ?>
