@@ -1,4 +1,27 @@
+<?php
+	
+	$id = (int)$_GET['id'];
 
+	$sql = Mysql::conectar()->prepare("SELECT * FROM `tb_admin.estoque_produtos` WHERE id = ?");
+	$sql->execute(array($id));
+
+	$infoProduto = $sql->fetch();
+
+	$infoImagem = Mysql::conectar()->prepare("SELECT * FROM `tb_admin.estoque_imagens` WHERE produto_id = $id");
+	$infoImagem->execute();
+	$infoImagem = $infoImagem->fetchAll();
+
+	if(isset($_GET['deletarImagem'])){
+		$idImagem = $_GET['deletarImagem'];
+		@unlink(BASE_DIR_PAINEL.'/uploads/'.$idImagem);
+		$sql = Mysql::conectar()->exec("DELETE FROM `tb_admin.estoque_imagens` WHERE imagem = '$idImagem'");
+		Painel::alert("sucesso","Imagem deletada com sucesso!");
+		$infoImagem = Mysql::conectar()->prepare("SELECT * FROM `tb_admin.estoque_imagens` WHERE produto_id = $id");
+		$infoImagem->execute();
+		$infoImagem = $infoImagem->fetchAll();
+	}
+
+?>
 <div class="wraper-titulo">
 		<div class="titulo-content">
 			<img src="<?php echo INCLUDE_PATH_PAINEL;?>img/notebook.png">
@@ -22,20 +45,20 @@
 
 <div class="box-content">
 	<img src="<?php echo INCLUDE_PATH_PAINEL;?>img/lapis.png">
-	<h2>Editar Produto</h2>
+	<h2>Editando Produto: <?php echo $infoProduto['nome']?></h2>
 
 	<?php permissaoPagina(1); ?>
 	
 	<div class="form-editar">
 
 	<?php
-		for($i = 0; $i < 6; $i++){
+		foreach ($infoImagem as $key => $value) {
 	?>
 
 	<div class="box-single-wraper">
 		<div class="box-single" style="box-shadow: 1px 1px 10px #ccc;min-height: inherit;">
 			<div class="box-topo">
-				<img style="width: 50%;height: 90px;border-radius: unset;" src="<?php echo INCLUDE_PATH_PAINEL?>uploads/60f733ae0523a.jpg">
+				<img style="width: 50%;height: 90px;border-radius: unset;" src="<?php echo INCLUDE_PATH_PAINEL?>uploads/<?php echo $value['imagem']?>">
 			</div><!--box-topo-->
 
 			<div class="box-btn" style="margin-top:5px;">
@@ -43,7 +66,7 @@
 				<a <?php
 						if($_SESSION['cargo'] >= 1){
 					  ?>
-					   class="btn-delete" style="background-color: #FF7B52;" item_id="<?php echo $value['id']?>" href="<?php echo INCLUDE_PATH_PAINEL?>visualizar-produtos?deletar=<?php echo $value['id']?>"
+					   class="btn-delete" style="background-color: #FF7B52;" item_id="<?php echo $value['id']?>" href="<?php echo INCLUDE_PATH_PAINEL?>editar-produto?id=<?php echo $id?>&deletarImagem=<?php echo $value['imagem']?>"
 					  <?php }else{ ?> 
 					  	actionBtn="negado" style="background-color: #FF7B52;" href="#"
 					  <?php } ?>
@@ -65,41 +88,41 @@
 
 			<div class="form-group form-produto">
 				<span class="block-span">Nome:</span>
-				<input style="width:100%;" type="text" name="nome" value="" >
+				<input style="width:100%;" type="text" name="nome" value="<?php echo $infoProduto['nome']?>" >
 			</div><!--from-group-->
 
 			<div class="form-group form-produto">
 				<span class="block-span">Descrição:</span>
-				<textarea style="width:100%;" type="text" name="descricao"></textarea>
+				<textarea style="width:100%;" type="text" name="descricao"><?php echo $infoProduto['descricao']?></textarea>
 			</div><!--from-group-->
 
 			<div class="form-group form-produto">
 				<span class="block-span">Largura:</span>
 				<span id="printLarg"></span>
-				<input name="largura" style="width:100%;" type="range" value="50" step="10" min="10" max="100" id="Larg">
+				<input name="largura" style="width:100%;" type="range" value="<?php echo $infoProduto['largura']?>" step="10" min="10" max="100" id="Larg">
 			</div><!--form-group-->
 
 			<div class="form-group form-produto">
 				<span class="block-span">Altura:</span>
 				<span id="printAlt"></span>
-				<input name="altura" style="width:100%;" type="range" value="50" step="10" min="10" max="100" id="Alt">
+				<input name="altura" style="width:100%;" type="range" value="<?php echo $infoProduto['altura']?>" step="10" min="10" max="100" id="Alt">
 			</div><!--form-group-->
 
 			<div class="form-group form-produto">
 				<span class="block-span">Comprimento:</span>
 				<span id="printCom"></span>
-				<input name="comprimento" style="width:100%;" type="range" value="50" step="10" min="10" max="100" id="Com">
+				<input name="comprimento" style="width:100%;" type="range" value="<?php echo $infoProduto['comprimento']?>" step="10" min="10" max="100" id="Com">
 			</div><!--form-group-->
 
 			<div class="form-group form-produto">
 				<span class="block-span">Peso:</span>
 				<span id="printPes"></span>
-				<input name="peso" style="width:100%;" type="range" value="50" step="10" min="10" max="100" id="Pes">
+				<input name="peso" style="width:100%;" type="range" value="<?php echo $infoProduto['peso']?>" step="10" min="10" max="100" id="Pes">
 			</div><!--form-group-->
 
 			<div class="form-group form-produto">
 				<span class="block-span">Quantidade:</span>
-				<input name="quantidade" style="width:100%;" type="number" value="50" step="10" min="10" max="100">
+				<input name="quantidade" style="width:100%;" type="number" value="<?php echo $infoProduto['quantidade']?>" step="10" min="10" max="100">
 			</div><!--form-group-->
 
 			<div class="form-group form-produto">

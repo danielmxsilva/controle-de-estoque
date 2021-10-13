@@ -153,3 +153,14 @@ agora vou fazer via php a exclusão do conteúdo e das fotos->{
 Criar um novo arquivo editar-produto.php->{
 	-editar ao meu gosto 
 }
+
+-----------------------------------AULA 9/9
+
+Página editar produto->{
+	-no topo da página vou pegar o id, vou conectar no banco pelo id e vou pegar o conteudo da tabela de estoque produto 
+	-vou verificar se bateu a condição, se não bater vou dar um erro
+	-colocar na página o nome do produto
+	-jogar na variavel infoProduto o conteudo do produto que eu peguei em cima
+
+	-vou pegar as imagens do banco correspondente ao produto id dessa página
+}

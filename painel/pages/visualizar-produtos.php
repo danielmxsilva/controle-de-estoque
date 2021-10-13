@@ -104,7 +104,7 @@
 			foreach($produto as $key => $value){
 				$imagemSingle = Mysql::conectar()->prepare("SELECT * FROM `tb_admin.estoque_imagens` WHERE produto_id = ? LIMIT 1");
 				$imagemSingle->execute(array($value['id']));
-				$imagemSingle = $imagemSingle->fetch()['imagem'];
+				$imagemSingle = @$imagemSingle->fetch()['imagem'];
 		?>
 
 		<div class="box-single-wraper">
@@ -112,7 +112,13 @@
 			<div class="box-single" <?php if($value['quantidade'] == 0) echo 'style="box-shadow: 1px 1px 10px #c71f1f"'?>>
 
 				<div class="box-topo">
+					<?php
+					if($imagemSingle == ''){
+					?>
+					<img style="width: 50%;height: 90px;border-radius: unset;" src="<?php echo INCLUDE_PATH_PAINEL?>img/editar-usuario.png">
+					<?php }else{?>
 					<img style="width: 50%;height: 90px;border-radius: unset;" src="<?php echo INCLUDE_PATH_PAINEL?>uploads/<?php echo $imagemSingle?>">
+					<?php } ?>
 				</div><!--box-topo-->
 
 				<div class="box-corpo">
@@ -222,7 +228,7 @@
 			foreach($produto as $key => $value){
 				$imagemSingle = Mysql::conectar()->prepare("SELECT * FROM `tb_admin.estoque_imagens` WHERE produto_id = ? LIMIT 1");
 				$imagemSingle->execute(array($value['id']));
-				$imagemSingle = $imagemSingle->fetch()['imagem'];
+				$imagemSingle = @$imagemSingle->fetch()['imagem'];
 		?>
 
 		<div class="box-single-wraper">
@@ -230,7 +236,13 @@
 			<div class="box-single" style="box-shadow: 1px 1px 10px #c71f1f">
 
 				<div class="box-topo">
+					<?php
+					if($imagemSingle == ''){
+					?>
+					<img style="width: 50%;height: 90px;border-radius: unset;" src="<?php echo INCLUDE_PATH_PAINEL?>img/editar-usuario.png">
+					<?php }else{?>
 					<img style="width: 50%;height: 90px;border-radius: unset;" src="<?php echo INCLUDE_PATH_PAINEL?>uploads/<?php echo $imagemSingle?>">
+					<?php } ?>
 				</div><!--box-topo-->
 
 				<div class="box-corpo">
