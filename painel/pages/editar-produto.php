@@ -48,6 +48,68 @@
 	<h2>Editando Produto: <?php echo $infoProduto['nome']?></h2>
 
 	<?php permissaoPagina(1); ?>
+
+	<?php
+		if(isset($_POST['tipo_acao'])){
+			$nome = $_POST['nome'];
+			$descricao = $_POST['descricao'];
+			$largura = $_POST['largura'];
+			$altura = $_POST['altura'];
+			$comprimento = $_POST['comprimento'];
+			$peso = $_POST['peso'];
+			$quantidade = $_POST['quantidade'];
+
+			$imagens = [];
+			$amountFiles = count($_FILES['imagem']['name']);
+
+			$sucesso = true;
+
+			if($_FILES['imagem']['name'][0] != ''){
+
+				for($i = 0; $i < $amountFiles; $i++){
+					$imagemAtual = ['type'=>$_FILES['imagem']['type'][$i],
+					'size'=>$_FILES['imagem']['size'][$i]];
+					if(Painel::imagemValida($imagemAtual) == false){
+						$sucesso = false;
+						Painel::alert('erro','Alguma imagem não é válida, por favor selecione imagem no formato jpg,jpeg ou png');
+						break;
+					}
+				}
+		
+			}else{
+				//Não está subindo nenhuma imagen
+			}
+
+			if($sucesso){
+
+				if($_FILES['imagem']['name'][0] != ''){
+					for($i = 0; $i < $amountFiles; $i++) { 
+						$imagemAtual = ['tmp_name'=>$_FILES['imagem']['tmp_name'][$i],
+						'name'=>$_FILES['imagem']['name'][$i]];
+						$imagens[] = Painel::uploadFile($imagemAtual);
+					}
+
+					foreach($imagens as $key => $value){
+						$sql = Mysql::conectar()->exec("INSERT INTO `tb_admin.estoque_imagens` VALUES(null,$id,'$value')");
+					}
+				}
+
+				$sql = Mysql::conectar()->prepare("UPDATE `tb_admin.estoque_produtos` SET nome = ?,descricao = ?,largura = ?, altura = ?,comprimento = ?, quantidade = ?, peso = ? WHERE id = $id");
+				$sql->execute(array($nome,$descricao,$largura,$altura,$comprimento,$quantidade,$peso));
+
+				$sql = Mysql::conectar()->prepare("SELECT * FROM `tb_admin.estoque_produtos` WHERE id = ?");
+				$sql->execute(array($id));
+
+				$infoProduto = $sql->fetch();
+
+				Painel::alert("sucesso","O produto foi editado com sucesso!");
+
+				$infoImagem = Mysql::conectar()->prepare("SELECT * FROM `tb_admin.estoque_imagens` WHERE produto_id = $id");
+				$infoImagem->execute();
+				$infoImagem = $infoImagem->fetchAll();
+			}
+		}
+	?>
 	
 	<div class="form-editar">
 
@@ -84,6 +146,8 @@
 	</div><!--form-editar-->
 
 	<div class="form-editar">
+
+		
 		<form method="POST" enctype="multipart/form-data">
 
 			<div class="form-group form-produto">
@@ -122,7 +186,7 @@
 
 			<div class="form-group form-produto">
 				<span class="block-span">Quantidade:</span>
-				<input name="quantidade" style="width:100%;" type="number" value="<?php echo $infoProduto['quantidade']?>" step="10" min="10" max="100">
+				<input name="quantidade" style="width:100%;" type="number" value="<?php echo $infoProduto['quantidade']?>" step="10">
 			</div><!--form-group-->
 
 			<div class="form-group form-produto">
@@ -133,7 +197,7 @@
 
 			<div class="form-group">
 				<input type="hidden" name="tipo_acao" value="cadastrar_cliente">
-				<input <?php permissaoInput(1,'acao_adicionar','Cadastrar')?>>
+				<input <?php permissaoInput(1,'acao_adicionar','Editar')?>>
 			
 			</div><!--from-group-->
 		</form>
